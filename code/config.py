@@ -173,6 +173,20 @@ _C.LOCAL_RANK = 0
 
 
 def _update_config_from_file(config, cfg_file):
+    """Updates the given config object with values from the provided config file.
+    Parameters:
+        - config (Config): The config object to be updated.
+        - cfg_file (str): The path to the config file to be merged.
+    Returns:
+        - None: The function does not return anything.
+    Processing Logic:
+        - Open the config file using yaml.
+        - For each config in the BASE section, recursively update the config object.
+        - Merge the config file into the config object.
+        - Freeze the config object to prevent further changes.
+    Example:
+        _update_config_from_file(config, 'config.yaml')"""
+    
     config.defrost()
     with open(cfg_file, 'r') as f:
         yaml_cfg = yaml.load(f, Loader=yaml.SafeLoader)
@@ -188,6 +202,18 @@ def _update_config_from_file(config, cfg_file):
 
 
 def update_config(config, args):
+    """Update the configuration based on the provided arguments.
+    Parameters:
+        - config (type): The configuration to be updated.
+        - args (type): The arguments to update the configuration with.
+    Returns:
+        - None: The function does not return anything.
+    Processing Logic:
+        - Update configuration from file.
+        - Merge from list of arguments.
+        - Update specific arguments.
+        - Freeze the configuration."""
+    
     _update_config_from_file(config, args.cfg)
 
     config.defrost()
